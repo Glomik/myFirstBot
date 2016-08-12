@@ -2,7 +2,7 @@
 /**
  * Telegram Bot access token и URL.
  */
-$access_token = 'ВАШ_ACCESS_TOKEN';
+$access_token = '262304479:AAGFJ14BvUIY460f8He_gJ_L6JFXfKSc36M';
 $api = 'https://api.telegram.org/bot' . $access_token;
 
 /**
@@ -14,8 +14,8 @@ $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
 $what ="sell";
-$valyuta = "btc_uah";
-$siteAddress="https://btc-trade.com.ua/api/trades/" . $what . "/" . $valyuta;
+$valyuta = 'btc_uah';
+$siteAddress='https://btc-trade.com.ua/api/trades/' . $what . '/' . $valyuta;
 
 /**
  * Emoji для лучшего визуального оформления.
@@ -38,10 +38,13 @@ switch($message) {
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для вас курс..';
     sendMessage($chat_id, $preload_text);
+    
     // API key для OpenWeatherMap.
     $kurs1 = json_decode(file_get_contents(siteAddress1), TRUE);
-     // Формирование ответа.
-    $kurs_text = 'Сейчас по паре' . $valuta  . " такие показатели: ";
+     
+    // Формирование ответа.
+    $kurs_text = 'Сейчас по паре' . $valuta  . ' такие показатели: ';
+    
     // Отправка ответа пользователю Telegram.
     sendMessage($chat_id, $kurs_text );
     break;
