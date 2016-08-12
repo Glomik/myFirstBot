@@ -13,9 +13,11 @@ $chat_id = $output['message']['chat']['id'];
 $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
-$what ='sell';
+
 $valyuta = 'btc_uah';
-$siteAddress='https://btc-trade.com.ua/api/trades/' . $what . '/' . $valyuta;
+$siteAddress1='https://btc-trade.com.ua/api/trades/buy/' . $valyuta;
+$siteAddress2='https://btc-trade.com.ua/api/trades/sell/' . $valyuta;
+
 
 /**
  * Emoji для лучшего визуального оформления.
@@ -40,13 +42,16 @@ switch($message) {
     sendMessage($chat_id, $preload_text);
     
     // API key для OpenWeatherMap.
-    $kurs1 = json_decode(file_get_contents($siteAddress), TRUE);
-     
+    $kurs1 = json_decode(file_get_contents($siteAddress1), TRUE);
+    $kurs2 = json_decode(file_get_contents($siteAddress2), TRUE);
+  
     // Формирование ответа.
     $kurs_text = 'Сейчас по паре' . $valyuta  . ' такие показатели: ';
     
     // Отправка ответа пользователю Telegram.
-    sendMessage($chat_id, $kurs_text );
+    sendMessage($chat_id, 'Buy:' . $kurs1 );
+    sendMessage($chat_id, 'Sell:' .$kurs2 );
+    
     break;
   default:
     break;
