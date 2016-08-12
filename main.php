@@ -46,11 +46,12 @@ switch($message) {
     $kurs2 = json_decode(file_get_contents($siteAddress2), TRUE);
   
     // Формирование ответа.
-    $kurs_text = 'Сейчас по паре' . $valyuta  . ' такие показатели: ';
+    $kurs_text = 'Сейчас по паре ' . $valyuta  . ' такие показатели: ';
     
     // Отправка ответа пользователю Telegram.
-    sendMessage($chat_id, 'Buy:  ' . $kurs1[max_price] );
-    sendMessage($chat_id, 'Sell: ' . $kurs2[min_price] );
+    sendMessage($chat_id, $kurs_text );
+    sendMessage($chat_id, 'Покупка: ' . $kurs1[max_price] );
+    sendMessage($chat_id, 'Продажа: ' . $kurs2[min_price] );
     
     break;
   default:
