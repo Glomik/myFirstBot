@@ -38,20 +38,20 @@ $emoji = array(
 switch($message) {
   case '/test':
     // Отправляем приветственный текст.
-    $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для вас курс..';
+    $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс..';
     sendMessage($chat_id, $preload_text);
     
-    // API key для OpenWeatherMap.
-    $kurs1 = json_decode(file_get_contents($siteAddress1), TRUE);
-    $kurs2 = json_decode(file_get_contents($siteAddress2), TRUE);
-  
     // Формирование ответа.
     $kurs_text = 'Сейчас по паре ' . $valyuta  . ' такие показатели: ';
+    sendMessage($chat_id, $kurs_text );
     
     // Отправка ответа пользователю Telegram.
-    sendMessage($chat_id, $kurs_text );
-    sendMessage($chat_id, 'Покупка: ' . $kurs1[max_price] );
-    sendMessage($chat_id, 'Продажа: ' . $kurs2[min_price] );
+   
+    $kurs = json_decode(file_get_contents($siteAddress1), TRUE);
+    sendMessage($chat_id, 'Покупка: ' . $kurs[max_price] );
+    
+    $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
+    sendMessage($chat_id, 'Продажа: ' . $kurs[min_price] );
     
     break;
   default:
