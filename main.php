@@ -49,8 +49,8 @@ switch($message) {
     $kurs_text = 'Сейчас по паре' . $valyuta  . ' такие показатели: ';
     
     // Отправка ответа пользователю Telegram.
-    sendMessage($chat_id, 'Buy:' . $kurs1 );
-    sendMessage($chat_id, 'Sell:' .$kurs2 );
+    sendMessage($chat_id, 'Buy:  ' . $kurs1[max_price] );
+    sendMessage($chat_id, 'Sell: ' . $kurs2[min_price] );
     
     break;
   default:
