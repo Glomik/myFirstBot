@@ -20,7 +20,7 @@ $siteAddress2='https://btc-trade.com.ua/api/trades/sell/' . $valyuta;
 
 
 $listSites = array(
-  'name'  => array( 'btc-trade.com.ua','poloniex.com') ,
+  'name'  => array( 'BTC_TRADE','POLONIEX') ,
   'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker'),
 );
 $listPairs = array(
