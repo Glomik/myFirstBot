@@ -13,19 +13,11 @@ $chat_id = $output['message']['chat']['id'];
 $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
-
-$valyuta = 'btc_uah';
-$siteAddress1='https://btc-trade.com.ua/api/trades/buy/' . $valyuta;
-$siteAddress2='https://btc-trade.com.ua/api/trades/sell/' . $valyuta;
-
-
 $listSites = array(
   'name'  => array( 'BTC_TRADE','POLONIEX') ,
   'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker'),
-);
-$listPairs = array(
-  "name"  => array('грн/1биткоин', 'USD/1биткоин'),
-  "value" => array ("btc_uah", "usdt_btc"),
+  "val_name"  => array('грн', 'USD'),
+  "val_value" => array ("BTC_UAH", "USDT_BTC"),
 );
 
 $emoji = array(
@@ -44,6 +36,12 @@ $emoji = array(
  */
 switch($message) {
   case '/test':
+    
+    
+    $valyuta = 'btc_uah';
+    $siteAddress1='https://btc-trade.com.ua/api/trades/buy/' . $valyuta;
+    $siteAddress2='https://btc-trade.com.ua/api/trades/sell/' . $valyuta;
+
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ...';
     sendMessage($chat_id, $preload_text);
@@ -68,16 +66,16 @@ switch($message) {
     sendMessage($chat_id, $preload_text);
     
     // Формирование ответа.
-    $kurs = json_decode(file_get_contents($siteAddress1), TRUE);
+    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/'. $listSites['val_value'][0]), TRUE);
     $kurs_text = $listSites['name'][0] . ': ' . $kurs[max_price];
     
-    $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
-    $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' грн.';
+    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'sell/'. $listSites['val_value'][0]), TRUE);
+    $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' ' . $listSites['val_name'][0];
     
     sendMessage($chat_id, $kurs_text );
     
     $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
-    $kurs_text = $listSites['name'][1] . ': ' . $data['USDT_BTC']['highestBid'] . ' - ' . $data['USDT_BTC']['lowestAsk'] . ' USD';
+    $kurs_text = $listSites['name'][1] . ': ' . $data['USDT_BTC']['highestBid'] . ' - ' . $data['USDT_BTC']['lowestAsk'] . ' ' . $listSites['val_name'][1];
 
     sendMessage($chat_id, $kurs_text );
   
