@@ -62,7 +62,7 @@ switch($message) {
     
     break;
   
-  case '/BTC':
+  case '/btc':
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ...';
     sendMessage($chat_id, $preload_text);
