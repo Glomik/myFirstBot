@@ -27,7 +27,16 @@ $listPairs = array(
   "name"  => array('грн/1биткоин', 'USD/1биткоин'),
   "value" => array ("btc_uah", "usdt_btc"),
 );
-/**
+
+$emoji = array(
+  'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
+  'weather' => array(
+    'clear' => json_decode('"\u2600"'), // Солнце.
+    'clouds' => json_decode('"\u2601"'), // Облака.
+    'rain' => json_decode('"\u2614"'), // Дождь.
+    'snow' => json_decode('"\u2744"'), // Снег.
+  ),
+);
 
 
 /**
@@ -60,15 +69,15 @@ switch($message) {
     
     // Формирование ответа.
     $kurs = json_decode(file_get_contents($siteAddress1), TRUE);
-    $kurs_text = 'Биржа "' . $listSites['name'][0] . '": Покупка - ' . $kurs[max_price];
+    $kurs_text = $listSites['name'][0] . ': ' . $kurs[max_price];
     
     $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
-    $kurs_text = $kurs_text . '. Продажа - ' . $kurs[min_price];
+    $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' грн.';
     
     sendMessage($chat_id, $kurs_text );
     
     $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
-    $kurs_text = 'Биржа ' . $listSites['name'][1] . ': Покупка - ' . $data['USDT_BTC']['lowestAsk'] . ': Продажа - ' . $data['USDT_BTC']['highestBid'];
+    $kurs_text = $listSites['name'][1] . ': ' . $data['USDT_BTC']['highestBid'] . ' - ' . $data['USDT_BTC']['lowestAsk'] . ' USD';
 
     sendMessage($chat_id, $kurs_text );
   
