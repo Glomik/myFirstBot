@@ -19,18 +19,16 @@ $siteAddress1='https://btc-trade.com.ua/api/trades/buy/' . $valyuta;
 $siteAddress2='https://btc-trade.com.ua/api/trades/sell/' . $valyuta;
 
 
-/**
- * Emoji для лучшего визуального оформления.
- */
-$emoji = array(
-  'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
-  'weather' => array(
-    'clear' => json_decode('"\u2600"'), // Солнце.
-    'clouds' => json_decode('"\u2601"'), // Облака.
-    'rain' => json_decode('"\u2614"'), // Дождь.
-    'snow' => json_decode('"\u2744"'), // Снег.
-  ),
+$listSites = array(
+  'name'  => array( 'btc-trade.com.ua','poloniex.com') ,
+  'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker'),
 );
+$listPairs = array(
+  "name"  => array('грн/1биткоин', 'USD/1биткоин'),
+  "value" => array ("btc_uah", "usdt_btc"),
+);
+/**
+
 
 /**
  * Получаем команды от пользователя.
@@ -52,6 +50,28 @@ switch($message) {
     
     $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
     sendMessage($chat_id, 'Продажа: ' . $kurs[min_price] );
+    
+    break;
+  
+  case '/BTC':
+    // Отправляем приветственный текст.
+    $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ...';
+    sendMessage($chat_id, $preload_text);
+    
+    // Формирование ответа.
+    $kurs = json_decode(file_get_contents($siteAddress1), TRUE);
+    $kurs_text = 'Биржа "' . $listSites['name'][0] . '": Покупка - ' . $kurs[max_price];
+    
+    $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
+    $kurs_text = $kurs_text . '. Продажа - ' . $kurs[min_price];
+    
+    sendMessage($chat_id, $kurs_text );
+    
+    $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
+    $kurs_text = 'Биржа ' . $listSites['name'][1] . ': Покупка - ' . $data['USDT_BTC']['lowestAsk'] . ': Продажа - ' . $data['USDT_BTC']['highestBid'];
+
+    sendMessage($chat_id, $kurs_text );
+  
     
     break;
   default:
