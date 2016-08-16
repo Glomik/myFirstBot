@@ -79,7 +79,7 @@ switch($message) {
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ' . strtoupper($name) . '...';
     sendMessage($chat_id, $preload_text);
     
-    $preload_text = 'REF= ' . $list_val[$name][0]);
+    $preload_text = 'REF= ' . $list_val[$name]['ref'];
     sendMessage($chat_id, $preload_text);
  
   /*  
