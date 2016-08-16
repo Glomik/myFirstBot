@@ -19,6 +19,10 @@ $listSites = array(
   "val_name"  => array('грн', 'USD'),
   "val_value" => array ("_UAH", "USDT_"),
 );
+$list_val = array(
+  'name' => array('btc','ltc','etc','dash','eth'),
+  'ref' => array('11','11','01','01','01','01'),
+);
 
 $emoji = array(
   'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
@@ -62,24 +66,34 @@ switch($message) {
   
   case '/ltc':
   case '/btc':
+  case '/etc':
+  case '/eth':
+  case '/dash':
+    
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ' . strtoupper(substr($message,1)) . '...';
     sendMessage($chat_id, $preload_text);
+ 
+    $ref=$list_val(['ref'][substr($message,1)]);
     
-    // Формирование ответа.
-    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
-    $kurs_text = $listSites['name'][0] . ': ' . $kurs[max_price];
+    if (substr($ref,0,1)='1' ) {
+        
+      // Формирование ответа.
+      $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
+      $kurs_text = $listSites['name'][0] . ': ' . $kurs[max_price];
+      
+      $kurs = json_decode(file_get_contents($listSites['address'][0] . 'sell/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
+      $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' ' . $listSites['val_name'][0];
+      
+      sendMessage($chat_id, $kurs_text );
+    }
     
-    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'sell/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
-    $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' ' . $listSites['val_name'][0];
-    
-    sendMessage($chat_id, $kurs_text );
-    
-    $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
-    $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1))]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1)) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
-
-    sendMessage($chat_id, $kurs_text );
+    if (substr($ref,1,1)='1' ) {
+      $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
+      $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1))]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1)) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
   
+      sendMessage($chat_id, $kurs_text );
+    }
     
     break;
   default:
