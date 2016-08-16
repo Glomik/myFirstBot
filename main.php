@@ -14,20 +14,21 @@ $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
 $listSites = array(
-  'name'  => array( 'BTC_TRADE','POLONIEX', 'CEX', 'BITSTAMP') ,
+  'name'  => array( 'BTC_TRADE','POLONIEX', 'CEX', 'BITSTAMP','GEMINI') ,
   'address' => array( 'https://btc-trade.com.ua/api/trades/', 
                       'https://poloniex.com/public?command=returnTicker', 
                       'https://cex.io/api/ticker/',
-                      'https://www.bitstamp.net/api/v2/ticker/'),
-  "val_name"  => array('грн', 'USD','USD', 'USD'),
-  "val_value" => array ("_UAH", "USDT_",'/USD','usd'),
+                      'https://www.bitstamp.net/api/v2/ticker/',
+                      'https://api.gemini.com/v1/pubticker/'),
+  "val_name"  => array('грн', 'USD','USD', 'USD','USD'),
+  "val_value" => array ("_UAH", "USDT_",'/USD','usd', 'USD'),
 );
 $list_val = array(
-  'btc' => array('ref' =>'1111'),
-  'ltc' => array('ref' =>'1110'),
-  'etc' => array('ref' =>'0100'),
-  'dash'=> array('ref' =>'0100'),
-  'eth' => array('ref' =>'0110'),
+  'btc' => array('ref' =>'11111'),
+  'ltc' => array('ref' =>'11100'),
+  'etc' => array('ref' =>'01001'),
+  'dash'=> array('ref' =>'01000'),
+  'eth' => array('ref' =>'01100'),
 );
 
 $emoji = array(
@@ -118,6 +119,12 @@ switch($message) {
     if (substr($ref,3,1)=='1' ) {
       $data = json_decode(file_get_contents($listSites["address"][3] . $name . $listSites['val_value'][3] ), TRUE); 
       $kurs_text = $listSites['name'][3] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][3];
+  
+      sendMessage($chat_id, $kurs_text );
+    }
+    if (substr($ref,4,1)=='1' ) {
+      $data = json_decode(file_get_contents($listSites["address"][4] . strtoupper($name) . $listSites['val_value'][4] ), TRUE); 
+      $kurs_text = $listSites['name'][4] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][4];
   
       sendMessage($chat_id, $kurs_text );
     }
