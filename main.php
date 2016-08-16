@@ -14,17 +14,17 @@ $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
 $listSites = array(
-  'name'  => array( 'BTC_TRADE','POLONIEX') ,
-  'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker'),
-  "val_name"  => array('грн', 'USD'),
-  "val_value" => array ("_UAH", "USDT_"),
+  'name'  => array( 'BTC_TRADE','POLONIEX', 'CEX') ,
+  'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker', 'https://cex.io/api/ticker/'),
+  "val_name"  => array('грн', 'USD','USD'),
+  "val_value" => array ("_UAH", "USDT_",'/USD'),
 );
 $list_val = array(
-  'btc' => array('ref' =>'11'),
-  'ltc' => array('ref' =>'11'),
-  'etc' => array('ref' =>'01'),
-  'dash'=> array('ref' =>'01'),
-  'eth' => array('ref' =>'01'),
+  'btc' => array('ref' =>'111'),
+  'ltc' => array('ref' =>'111'),
+  'etc' => array('ref' =>'010'),
+  'dash'=> array('ref' =>'010'),
+  'eth' => array('ref' =>'011'),
 );
 
 $emoji = array(
@@ -100,11 +100,17 @@ switch($message) {
     
     if (substr($ref,1,1)=='1' ) {
       $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
-      $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper($name) ]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1)) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
+      $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper($name) ]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper($name) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
   
       sendMessage($chat_id, $kurs_text );
     }
     
+    if (substr($ref,2,1)=='1' ) {
+      $data = json_decode(file_get_contents($listSites["address"][2] . strtoupper($name) . $listSites['val_value'][2] ), TRUE); 
+      $kurs_text = $listSites['name'][2] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name']2];
+  
+      sendMessage($chat_id, $kurs_text );
+    }
     break;
   default:
     break;
