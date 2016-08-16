@@ -107,7 +107,7 @@ switch($message) {
     
     if (substr($ref,2,1)=='1' ) {
       $data = json_decode(file_get_contents($listSites["address"][2] . strtoupper($name) . $listSites['val_value'][2] ), TRUE); 
-      $kurs_text = $listSites['name'][2] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name']2];
+      $kurs_text = $listSites['name'][2] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][2];
   
       sendMessage($chat_id, $kurs_text );
     }
