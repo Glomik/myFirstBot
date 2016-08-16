@@ -78,7 +78,7 @@ switch($message) {
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ' . strtoupper($name) . '...';
     sendMessage($chat_id, $preload_text);
-    
+  /*  
     $ref=$list_val([$name][0]);
     
     if (substr($ref,0,1)=='1' ) {
@@ -99,7 +99,7 @@ switch($message) {
   
       sendMessage($chat_id, $kurs_text );
     }
-    
+    */
     break;
   default:
     break;
