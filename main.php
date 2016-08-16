@@ -17,7 +17,7 @@ $listSites = array(
   'name'  => array( 'BTC_TRADE','POLONIEX') ,
   'address' => array( 'https://btc-trade.com.ua/api/trades/', 'https://poloniex.com/public?command=returnTicker'),
   "val_name"  => array('грн', 'USD'),
-  "val_value" => array ("BTC_UAH", "USDT_BTC"),
+  "val_value" => array ("_UAH", "USDT_"),
 );
 
 $emoji = array(
@@ -60,22 +60,23 @@ switch($message) {
     
     break;
   
+  case '/ltc':
   case '/btc':
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ...';
     sendMessage($chat_id, $preload_text);
     
     // Формирование ответа.
-    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/'. $listSites['val_value'][0]), TRUE);
+    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
     $kurs_text = $listSites['name'][0] . ': ' . $kurs[max_price];
     
-    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'sell/'. $listSites['val_value'][0]), TRUE);
+    $kurs = json_decode(file_get_contents($listSites['address'][0] . 'sell/' . substr($message,1) . $listSites['val_value'][0]), TRUE);
     $kurs_text = $kurs_text . ' - ' . $kurs[min_price] . ' ' . $listSites['val_name'][0];
     
     sendMessage($chat_id, $kurs_text );
     
     $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
-    $kurs_text = $listSites['name'][1] . ': ' . $data['USDT_BTC']['highestBid'] . ' - ' . $data['USDT_BTC']['lowestAsk'] . ' ' . $listSites['val_name'][1];
+    $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1))]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1)) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
 
     sendMessage($chat_id, $kurs_text );
   
