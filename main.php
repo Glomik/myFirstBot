@@ -20,11 +20,11 @@ $listSites = array(
   "val_value" => array ("_UAH", "USDT_"),
 );
 $list_val = array(
-  'btc' => array('11'),
-  'ltc' => array('11'),
-  'etc' => array('01'),
-  'dash'=> array('01'),
-  'eth' => array('01'),
+  'btc' => array('ref' =>'11'),
+  'ltc' => array('ref' =>'11'),
+  'etc' => array('ref' =>'01'),
+  'dash'=> array('ref' =>'01'),
+  'eth' => array('ref' =>'01'),
 );
 
 $emoji = array(
@@ -78,8 +78,12 @@ switch($message) {
     // Отправляем приветственный текст.
     $preload_text = 'Одну секунду, ' . $first_name . ' ' . $emoji['preload'] . ' Я уточняю для Вас курс ' . strtoupper($name) . '...';
     sendMessage($chat_id, $preload_text);
+    
+    $preload_text = 'REF= ' . $list_val[$name][0]);
+    sendMessage($chat_id, $preload_text);
+ 
   /*  
-    $ref=$list_val([$name][0]);
+    $ref=$list_val[$name][0];
     
     if (substr($ref,0,1)=='1' ) {
         
