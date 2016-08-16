@@ -65,6 +65,11 @@ switch($message) {
     $kurs = json_decode(file_get_contents($siteAddress2), TRUE);
     sendMessage($chat_id, 'Продажа: ' . $kurs[min_price] );
     
+  case '/help':
+    
+    $help="Возможно использовать такие команды:  /help, /test, /btc, /ltc, /etc, /eth, /dash ";
+    sendMessage($chat_id, $help );
+    
     break;
   
   case '/ltc':
