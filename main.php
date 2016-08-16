@@ -20,8 +20,11 @@ $listSites = array(
   "val_value" => array ("_UAH", "USDT_"),
 );
 $list_val = array(
-  'name' => array('btc','ltc','etc','dash','eth'),
-  'ref' => array('11','11','01','01','01'),
+  array('btc','11'),
+  array('ltc','11'),
+  array('etc','01'),
+  array('dash','01'),
+  array('eth','01'),
 );
 
 $emoji = array(
@@ -78,7 +81,7 @@ switch($message) {
     
     $ref=$list_val([$name]['ref']);
     
-    if (substr($ref,0,1)='1' ) {
+    if (substr($ref,0,1)=='1' ) {
         
       // Формирование ответа.
       $kurs = json_decode(file_get_contents($listSites['address'][0] . 'buy/' . $name . $listSites['val_value'][0]), TRUE);
@@ -90,7 +93,7 @@ switch($message) {
       sendMessage($chat_id, $kurs_text );
     }
     
-    if (substr($ref,1,1)='1' ) {
+    if (substr($ref,1,1)=='1' ) {
       $data = json_decode(file_get_contents($listSites["address"][1]), TRUE); 
       $kurs_text = $listSites['name'][1] . ': ' . $data[$listSites['val_value'][1] . strtoupper($name) ]['highestBid'] . ' - ' . $data[$listSites['val_value'][1] . strtoupper(substr($message,1)) ]['lowestAsk'] . ' ' . $listSites['val_name'][1];
   
