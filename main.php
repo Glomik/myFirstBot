@@ -77,8 +77,7 @@ switch($message) {
     sendMessage($chat_id, $preload_text);
     
     $ref=$list_val([$name]['ref']);
-    sendMessage($chat_id, $ref);
-    /*
+    
     if (substr($ref,0,1)='1' ) {
         
       // Формирование ответа.
@@ -97,7 +96,7 @@ switch($message) {
   
       sendMessage($chat_id, $kurs_text );
     }
-    */
+    
     break;
   default:
     break;
