@@ -147,15 +147,17 @@ function sendMessage($chat_id, $message) {
 function sendPhoto($chat_id, $name) {
 //  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
   $url = $GLOBALS['api'] . '/sendPhoto' ;
-  
+  imagedestroy (draw_game ($name,'example.png',3,2);
+  /*
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     =>   draw_game ('field.png','example.png',3,2)
+        'photo'     =>   
   );
-  /*  работает
+  */
+  //  работает
   $post_fields = array( 'chat_id' => $chat_id,
         'photo'     =>  new CURLFile( $name)
   );
-  */
+  //
   /*
   $ch = curl_init(); 
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
