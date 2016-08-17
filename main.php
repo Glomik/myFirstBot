@@ -47,7 +47,7 @@ $emoji = array(
  */
 switch($message) {
   case '/game':
-      sendPhoto($chat_id,'/field.png'); 
+      sendPhoto($chat_id,'field.png'); 
       break;
       
   case '/test':
@@ -146,12 +146,12 @@ function sendMessage($chat_id, $message) {
 
 function sendPhoto($chat_id, $name) {
 //  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
-  $url = $GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id );
+  $url = $GLOBALS['api'] . '/sendPhoto' ;
   
-  $post_fields = array('chat_id'   => $chat_id,
-      'photo'     => new CURLFile(realpath($name))
+  $post_fields = array( 'chat_id' => $chat_id,
+        'photo'     => '@'. $name  //new CURLFile($name)
   );
-
+  /*
   $ch = curl_init(); 
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     "Content-Type:multipart/form-data"
@@ -159,6 +159,24 @@ function sendPhoto($chat_id, $name) {
   curl_setopt($ch, CURLOPT_URL, $url); 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
   curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields); 
+  curl_setopt($ch, CURLOPT_INFILESIZE, filesize($name);
   $output = curl_exec($ch);
+  log $output;
+  */
+    //  open connection
+    $ch = curl_init();
+    //  set the url
+    curl_setopt($ch, CURLOPT_URL, $url);
+    //  number of POST vars
+    curl_setopt($ch, CURLOPT_POST, count($post_fields));
+    //  POST data
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+    //  To display result of curl
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //  execute post
+    $result = curl_exec($ch);
+    //  close connection
+    curl_close($ch);
+  curl_close($ch);
 
 }
