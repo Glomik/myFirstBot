@@ -47,7 +47,7 @@ $emoji = array(
  */
 switch($message) {
   case '/game':
-      sendPhoto($chat_id,'field.png'); 
+      sendPhoto($chat_id,'/field.png'); 
       break;
       
   case '/test':
