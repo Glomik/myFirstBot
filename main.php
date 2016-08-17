@@ -149,7 +149,7 @@ function sendPhoto($chat_id, $name) {
   $url = $GLOBALS['api'] . '/sendPhoto' ;
   
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     =>  imagepng( draw_game ('field.png','example.png',3,2))
+        'photo'     =>   draw_game ('field.png','example.png',3,2)
   );
   /*  работает
   $post_fields = array( 'chat_id' => $chat_id,
@@ -178,6 +178,8 @@ function sendPhoto($chat_id, $name) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
     //  To display result of curl
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
     //  execute post
     $result = curl_exec($ch);
     //  close connection
