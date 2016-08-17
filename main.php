@@ -144,6 +144,21 @@ function sendMessage($chat_id, $message) {
   file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
 }
 
-function sendPhoto($chat_id, $photo_id) {
-  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
+function sendPhoto($chat_id, $name) {
+//  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
+  $url = $GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id );
+  
+  $post_fields = array('chat_id'   => $chat_id,
+      'photo'     => new CURLFile(realpath($name))
+  );
+
+  $ch = curl_init(); 
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    "Content-Type:multipart/form-data"
+  ));
+  curl_setopt($ch, CURLOPT_URL, $url); 
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields); 
+  $output = curl_exec($ch);
+
 }
