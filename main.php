@@ -155,7 +155,7 @@ function sendPhoto($chat_id, $name) {
   */
   //  работает
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     =>  new CURLFile( $name)
+        'photo'     =>  new CURLFile('game' . $chat_id . image_type_to_extension(IMAGETYPE_PNG)) //$name)
   );
   //
   /*
@@ -190,7 +190,7 @@ function sendPhoto($chat_id, $name) {
 
 }
 
-function draw_game($const_game_field, $img_add, $i,$j)
+function draw_game($chat_id, $const_game_field, $img_add, $i,$j)
 {
   $new_img = imagecreatefrompng($const_game_field);
   $img    = imagecreatefrompng($img_add);
@@ -208,6 +208,10 @@ function draw_game($const_game_field, $img_add, $i,$j)
       imagesetpixel($new_img, 1+16*$i+$x, 1+16*$j+$y, $return_color );  
     }
   }
+  //return $new_img;
+  $ok=imagepng($new_img, 'game' . $chat_id . image_type_to_extension(IMAGETYPE_PNG));
+  imagedestroy($new_img);
   imagedestroy($img);
-  return $new_img;
+
+  
 }
