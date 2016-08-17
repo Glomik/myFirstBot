@@ -148,7 +148,7 @@ function sendPhoto($chat_id, $name) {
 //  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
   $url = $GLOBALS['api'] . '/sendPhoto' ;
   
-  draw_game ($chat_id, $name,'example.png',3,2);
+  //draw_game ($chat_id, $name,'example.png',3,2);
   //imagedestroy (draw_game ($name,'example.png',3,2);
   /*
   $post_fields = array( 'chat_id' => $chat_id,
@@ -157,7 +157,7 @@ function sendPhoto($chat_id, $name) {
   */
   //  работает
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     =>  '@' . draw_game ($chat_id, $name,'example.png',3,2)) //$name)
+        'photo'     =>  new CurlFile($name)
   );
   //
   /*
