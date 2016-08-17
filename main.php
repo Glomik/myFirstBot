@@ -46,6 +46,10 @@ $emoji = array(
  * Получаем команды от пользователя.
  */
 switch($message) {
+  case '/game':
+      sendPhoto($chat_id,'field.png'); 
+      break;
+      
   case '/test':
     
     
@@ -138,4 +142,8 @@ switch($message) {
  */
 function sendMessage($chat_id, $message) {
   file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
+}
+
+function sendPhoto($chat_id, $photo_id) {
+  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo=' . $photo_id);
 }
