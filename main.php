@@ -147,6 +147,8 @@ function sendMessage($chat_id, $message) {
 function sendPhoto($chat_id, $name) {
 //  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
   $url = $GLOBALS['api'] . '/sendPhoto' ;
+  
+  draw_game ($chat_id, $name,'example.png',3,2);
   //imagedestroy (draw_game ($name,'example.png',3,2);
   /*
   $post_fields = array( 'chat_id' => $chat_id,
@@ -210,6 +212,7 @@ function draw_game($chat_id, $const_game_field, $img_add, $i,$j)
   }
   //return $new_img;
   $ok=imagepng($new_img, 'game' . $chat_id . image_type_to_extension(IMAGETYPE_PNG));
+  sendMessage($chat_id,$ok);
   imagedestroy($new_img);
   imagedestroy($img);
 
