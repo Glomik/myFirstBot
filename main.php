@@ -149,8 +149,13 @@ function sendPhoto($chat_id, $name) {
   $url = $GLOBALS['api'] . '/sendPhoto' ;
   
   $post_fields = array( 'chat_id' => $chat_id,
+        'photo'     =>  imagepng( draw_game ('field.png','example.png',3,2))
+  );
+  /*  работает
+  $post_fields = array( 'chat_id' => $chat_id,
         'photo'     =>  new CURLFile( $name)
   );
+  */
   /*
   $ch = curl_init(); 
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -179,4 +184,26 @@ function sendPhoto($chat_id, $name) {
     curl_close($ch);
  
 
+}
+
+function draw_game($const_game_field, $img_add, $i,$j)
+{
+  $new_img = imagecreatefrompng($const_game_field);
+  $img    = imagecreatefrompng($img_add);
+  
+  # расчет размеров изображения (ширина и высота)  
+  $img_w = imagesx( $new_img ); 
+  $img_h = imagesy( $new_img ); 
+  
+  # пройдемся по изображению 
+  for( $y = 0; $y < 16; $y++ ) 
+  { 
+    for ($x = 0; $x < 16; $x++ ) 
+    { 
+      $return_color = imagecolorat( $img, $x, $y ); 
+      imagesetpixel($new_img, 1+16*$i+$x, 1+16*$j+$y, $return_color );  
+    }
+  }
+  imagedestroy($img);
+  return $new_img;
 }
