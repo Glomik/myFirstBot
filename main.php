@@ -157,7 +157,7 @@ function sendPhoto($chat_id, $name) {
   */
   //  работает
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     =>  new CURLFile('game' . $chat_id . image_type_to_extension(IMAGETYPE_PNG)) //$name)
+        'photo'     =>  '@' . draw_game ($chat_id, $name,'example.png',3,2)) //$name)
   );
   //
   /*
@@ -194,12 +194,10 @@ function sendPhoto($chat_id, $name) {
 
 function draw_game($chat_id, $const_game_field, $img_add, $i,$j)
 {
-  sendMessage($chat_id,'1');
+  
   $new_img = imagecreatefrompng($const_game_field);
   $img    = imagecreatefrompng($img_add);
-  
-  sendMessage($chat_id,'2');
-
+  /*
   # расчет размеров изображения (ширина и высота)  
   $img_w = imagesx( $new_img ); 
   $img_h = imagesy( $new_img ); 
@@ -213,15 +211,14 @@ function draw_game($chat_id, $const_game_field, $img_add, $i,$j)
       imagesetpixel($new_img, 1+16*$i+$x, 1+16*$j+$y, $return_color );  
     }
   }
+  */
   //return $new_img;
-  sendMessage($chat_id,'3');
   
-  $return=imagepng($new_img, 'game' . $chat_id . image_type_to_extension(IMAGETYPE_PNG));
-  sendMessage($chat_id,'4');
-  
-  imagedestroy($new_img);
+  //$return=imagepng($new_img, 'game1.png');
+
+  //imagedestroy($new_img);
   imagedestroy($img);
   
-  return $return;
+  return $new_img;
   
 }
