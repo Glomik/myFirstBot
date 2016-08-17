@@ -149,7 +149,7 @@ function sendPhoto($chat_id, $name) {
   $url = $GLOBALS['api'] . '/sendPhoto' ;
   
   $post_fields = array( 'chat_id' => $chat_id,
-        'photo'     => '@'. $name  //new CURLFile($name)
+        'photo'     =>  new CURLFile( $name)
   );
   /*
   $ch = curl_init(); 
@@ -177,6 +177,6 @@ function sendPhoto($chat_id, $name) {
     $result = curl_exec($ch);
     //  close connection
     curl_close($ch);
-  curl_close($ch);
+ 
 
 }
