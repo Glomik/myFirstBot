@@ -145,5 +145,5 @@ function sendMessage($chat_id, $message) {
 }
 
 function sendPhoto($chat_id, $photo_id) {
-  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo=' . $photo_id);
+  file_get_contents($GLOBALS['api'] . '/sendPhoto?chat_id=' . $chat_id . '&photo="' . $photo_id . '"');
 }
