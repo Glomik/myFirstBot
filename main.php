@@ -155,10 +155,11 @@ function sendPhoto($chat_id, $name) {
         'photo'     =>   
   );
   */
-  //  работает
+  /*   /  работает
   $post_fields = array( 'chat_id' => $chat_id,
         'photo'     =>  new CurlFile($name)
   );
+  */
   //
   /*
   $ch = curl_init(); 
