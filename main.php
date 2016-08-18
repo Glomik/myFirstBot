@@ -14,21 +14,22 @@ $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
 $listSites = array(
-  'name'  => array( 'BTC_TRADE','POLONIEX', 'CEX', 'BITSTAMP','GEMINI') ,
+  'name'  => array( 'BTC_TRADE','POLONIEX', 'CEX', 'BITFINEX','BITSTAMP','GEMINI') ,
   'address' => array( 'https://btc-trade.com.ua/api/trades/', 
                       'https://poloniex.com/public?command=returnTicker', 
                       'https://cex.io/api/ticker/',
+                      'https://api.bitfinex.com/v1/pubticker/',
                       'https://www.bitstamp.net/api/v2/ticker/',
                       'https://api.gemini.com/v1/pubticker/'),
-  "val_name"  => array('грн', 'USD','USD', 'USD','USD'),
-  "val_value" => array ("_UAH", "USDT_",'/USD','usd', 'USD'),
+  "val_name"  => array('грн', 'USD','USD', 'USD','USD', 'USD'),
+  "val_value" => array ("_UAH", "USDT_",'/USD','USD','usd', 'USD'),
 );
 $list_val = array(
-  'btc' => array('ref' =>'11111'),
-  'ltc' => array('ref' =>'11100'),
-  'etc' => array('ref' =>'01001'),
-  'dash'=> array('ref' =>'01000'),
-  'eth' => array('ref' =>'01100'),
+  'btc' => array('ref' =>'111111'),
+  'ltc' => array('ref' =>'111100'),
+  'etc' => array('ref' =>'010101'),
+  'dash'=> array('ref' =>'010000'),
+  'eth' => array('ref' =>'011100'),
 );
 
 $emoji = array(
@@ -119,16 +120,21 @@ switch($message) {
   
       sendMessage($chat_id, $kurs_text );
     }
-    
     if (substr($ref,3,1)=='1' ) {
-      $data = json_decode(file_get_contents($listSites["address"][3] . $name . $listSites['val_value'][3] ), TRUE); 
+      $data = json_decode(file_get_contents($listSites["address"][3] . strtoupper($name) . $listSites['val_value'][3] ), TRUE); 
       $kurs_text = $listSites['name'][3] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][3];
   
       sendMessage($chat_id, $kurs_text );
     }
     if (substr($ref,4,1)=='1' ) {
-      $data = json_decode(file_get_contents($listSites["address"][4] . strtoupper($name) . $listSites['val_value'][4] ), TRUE); 
+      $data = json_decode(file_get_contents($listSites["address"][4] . $name . $listSites['val_value'][4] ), TRUE); 
       $kurs_text = $listSites['name'][4] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][4];
+  
+      sendMessage($chat_id, $kurs_text );
+    }
+    if (substr($ref,5,1)=='1' ) {
+      $data = json_decode(file_get_contents($listSites["address"][5] . strtoupper($name) . $listSites['val_value'][5] ), TRUE); 
+      $kurs_text = $listSites['name'][5] . ': ' . $data['bid'] . ' - ' . $data['ask'] . ' ' . $listSites['val_name'][5];
   
       sendMessage($chat_id, $kurs_text );
     }
